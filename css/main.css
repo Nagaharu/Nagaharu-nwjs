@@ -1,0 +1,121 @@
+*{
+	margin:0;
+	padding:0;
+	overflow-x:hidden;
+	background-color:rgb(37,37,38);
+	font-family:"MPlus";
+}
+
+body{
+	-webkit-print-color-adjust: exact;
+}
+
+h4{
+	font-size:20px;
+	font-weight:bold;
+}
+
+/* ヘッダー */
+#header{
+	width:100%;
+	height:64px;
+	background-color:rgb(30,30,30);
+	color:rgb(212,212,212);
+}
+
+#btn{
+	width:100px;
+	background-color:rgb(38,37,37);
+	color:rgb(173,173,173);
+	padding:10px 0;
+	margin:8px 4px;
+	text-align:center;
+	transition-duration: 0.5s;
+	float:left;
+}
+
+#btn_toolbox{
+	width:100px;
+	background-color:rgb(38,37,37);
+	color:rgb(173,173,173);
+	border:solid 1px rgb(173,173,173);
+	padding:10px 0;
+	margin:8px 4px;
+	text-align:center;
+	transition-duration: 0.5s;
+	float:left;
+}
+
+#btn:hover,#btn_toolbox:hover{
+	background-color:rgb(173,173,173);
+	color:rgb(38,37,37);
+}
+
+/* メイン画面 */
+#Main{
+	width:99%;
+	height:10vh;
+}
+
+/* 	左半分 */
+#left{
+	width:70%;
+	height:89vh;
+	float:left;
+	overflow:scroll;
+}
+
+/* 紙枠 */
+#Paper{
+	width:792px;
+	height:1120px;
+	background-color:rgb(250,250,250);
+	position:relative;
+}
+
+/* データ設定枠 */
+#right{
+	width:28%;
+	height:88vh;
+	background-color:rgb(37,37,38);
+	color:rgb(212,212,212);
+	padding:6px;
+	float:right;
+}
+
+#right input,select,option{
+	background-color:rgb(212,212,212);
+	color:rgb(38,37,37);
+	font-size:14px;
+	font-family:"MPlus";
+	width:100%;
+}
+
+/* 文字ボックス */
+.Nghr_TextBox{
+	position:absolute;
+	width:auto;
+	background-color:transparent;
+	padding:4;
+	font-size:14px;
+	line-height:20px;
+	letter-spacing:0px;
+	overflow:hidden;
+	border:dotted 1px black;
+}
+
+.Nghr_TextBox span,b,i,u{
+	background-color:transparent;
+}
+
+#EditMode{
+	font-size:14px;
+}
+
+#EditTxData{
+	background-color:rgb(212,212,212);
+	color:rgb(38,37,37);
+	margin:8px 4px;
+	width:90%;
+	height:100px;
+}

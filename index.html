@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link href="css/jquery-ui.css" rel="stylesheet">
+		<link href="css/main.css" rel="stylesheet">
+		<link href="css/print.css" rel="stylesheet">
+		<link href="css/font.css" rel="stylesheet">
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="js/jquery.js"></script>
+		<script src="js/jquery-ui.js"></script>
+		<script src="js/printThis.js"></script>
+		<script src="js/jscolor.min.js"></script>
+		<script src="js/main.js"></script>
+		<!-- Include all compiled plugins (below), or include individual files as needed -->
+	</head>
+	<body>
+		<div id="header">
+			<div id="btn">新規作成</div>
+			<div id="btn">データ読込</div>
+			<div id="btn">上書き保存</div>
+			<div id="btn">別名で保存</div>
+			<div id="btn" onclick="javascript:DocPrint()">印刷</div>
+		</div>
+		<div id="left">
+			<div id="Paper">
+				
+			</div>
+		</div>
+		<div id="right">
+			<div style="font-size:20px;overflow:hidden;">新規部品</div>
+			<div id="btn_toolbox" onclick="javascript:AddText()">文字</div>
+			<br><br><br>
+			<div style="height:45%;">
+				<div style="font-size:20px;overflow:hidden;">設定 <span id="EditMode"></span></div>
+				<textarea id="EditTxData"></textarea><br>
+				<div style="line-height:34px;">
+					<table>
+						<!-- 行間 -->
+						<tr>
+							<td align="right">行間：</td>
+							<td><input type="number" id="TextParam1" value="20" onchange="javascript:ChangeLineHeight()"></td>
+						</tr>
+						<!-- 文字間 -->
+						<tr>
+							<td align="right">文字間：</td>
+							<td><input type="number" id="TextParam2" value="0" onchange="javascript:ChangeLineWidth()"></td>
+						</tr>
+						<!-- フォントサイズ -->
+						<tr>
+							<td align="right">フォントサイズ：</td>
+							<td><input type="number" id="TextParam3" value="14" onchange="javascript:ChangeFontSize()"><br></td>
+						</tr>
+						<!-- フォント -->
+						<tr>
+							<td align="right">フォント：</td>
+							<td>
+								<select id="TextFontFamily" onchange="javascript:ChangeFontFamily()">
+								<option value="MPlus">M+ 1c Regular (内蔵)</option>
+								<option value="MS Gothic" style="font-family:'MS Gothic'">MS ゴシック</option>
+								<option value="MS Mincho" style="font-family:'MS Mincho'">MS 明朝</option>
+								</select>
+							</td>
+						</tr>
+						<!-- フォントカラー -->
+						<tr>
+							<td align="right">フォント色：</td>
+							<td>
+								<input type="text" id="TextFontColor" class="jscolor" value="000000" onchange="javascript:ChangeFontColor()">
+							</td>
+						</tr>
+					</table>
+				</div>
+				
+			</div>
+		</div>
+	</body>
+</html>

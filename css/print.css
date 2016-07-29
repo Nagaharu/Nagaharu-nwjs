@@ -1,0 +1,19 @@
+/* 印刷の書式 */
+@page{
+	margin:0;
+	size: a4;
+}
+
+/* 印刷の設定 */
+@media print {
+  #Paper {
+    width: 210mm; /* needed for Chrome */
+  }
+  .ui-resizable-e,.ui-resizable-s,.ui-resizable-se{
+    width:0;
+    height:0;
+  }
+  .Nghr_TextBox{
+    border:none;
+  }
+}
