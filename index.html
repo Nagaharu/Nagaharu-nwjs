@@ -16,11 +16,13 @@
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 	</head>
 	<body>
+		<input type="file" id="DataSaveAs" nwsaveas style="display:none;" onchange="StartSaveAs()">
+		<input type="file" id="DataLoad" style="display:none;" onchange="StartLoad()">
 		<div id="header">
 			<div id="btn">新規作成</div>
-			<div id="btn">データ読込</div>
-			<div id="btn">上書き保存</div>
-			<div id="btn">別名で保存</div>
+			<div id="btn" onclick="javascript:DocLoad()">データ読込</div>
+			<div id="btn" onclick="javascript:DocSave()">上書き保存</div>
+			<div id="btn" onclick="javascript:DocSaveAs()">別名で保存</div>
 			<div id="btn" onclick="javascript:DocPrint()">印刷</div>
 		</div>
 		<div id="left">
@@ -68,6 +70,49 @@
 							<td align="right">フォント色：</td>
 							<td>
 								<input type="text" id="TextFontColor" class="jscolor" value="000000" onchange="javascript:ChangeFontColor()">
+							</td>
+						</tr>
+					</table>
+					<table style="table-layout: fixed;width:100%">
+						<tr>
+							<td align="center" width="33%">
+								<a id="TextStyleLink" href="javascript:ChangeFontLeft()">
+									左揃え
+								</a>
+							</td>
+							<td align="center" width="33%">
+								<a id="TextStyleLink" href="javascript:ChangeFontCenter()">
+									中央揃え
+								</a>
+							</td>
+							<td align="center" width="33%">
+								<a id="TextStyleLink" href="javascript:ChangeFontRight()">
+									右揃え
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td align="center" width="50%">
+								<a id="TextStyleLink" href="javascript:ChangeFontBold()">
+									<b>太字</b>
+								</a>
+							</td>
+							<td align="center" width="50%">
+								<a id="TextStyleLink" href="javascript:ChangeFontItalic()">
+									<i>斜体</i>
+								</a>
+							</td>
+							<td align="center" width="50%">
+								<a id="TextStyleLink" href="javascript:ChangeFontUnderLine()">
+									<u>下線</u>
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td align="center" width="50%">
+								<a id="TextStyleLink" href="javascript:ChangeFontWritingMode()">
+									縦書き
+								</a>
 							</td>
 						</tr>
 					</table>
