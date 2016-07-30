@@ -1,9 +1,3 @@
-/* 印刷の書式 */
-@page{
-	margin:0;
-	size: a4;
-}
-
 /* 印刷の設定 */
 @media print {
   #Paper {

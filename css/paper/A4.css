@@ -1,0 +1,16 @@
+/*
+Nagaharu DTP
+A4-size Sheet Settings v1
+
+(c)2016 Sora Arkw all rights reserved.
+*/
+
+@page{
+	margin:0;
+	size: a4;
+}
+
+#Paper{
+    width:792px;
+	height:1120px;
+}

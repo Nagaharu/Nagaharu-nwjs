@@ -1,33 +1,47 @@
+/*
+Nagaharu DTP v1.0 (Dev) - main.js
+(c)2016 Sora Arkw all rights reserved.
+
+
+*/
+
 var EditText,EditTextArray,EditTextData,EditTextClass; //文章シート関連
 var FileName; //ファイル関連
 var NewTextID=0;
 var fs = require('fs');
 
-window.onload=function(){
-    
-}
-
-// ドラッグ操作の有効化
 jQuery(function(){
+    $("#PaperCSS").html('<link rel="stylesheet" href="css/paper/A4.css">');
+    // テキストエリアEditTxDataが編集された時に発火するイベント
     $("#EditTxData").each(function(){
         $(this).bind("keyup", CheckTxData(this));
     });
 } );
 
+// ドラッグ＆ドロップ機能の初期化
 function StartDragDrop(){
     jQuery('.Nghr_TextBox').draggable({
         containment: 'parent',
         scroll: false,
         start: function(event, ui) {
+            // 編集する文章シートのIDを取得
             EditTextData=$(this).attr("id");
+
+            // テキストエリアに文章シートの内容を表示
             EditText=$("#tx"+EditTextData).text();
             $("#EditTxData").val(EditText);
+
+            // 文章シートの行間を取得
             var TxLineHeight=$(this).css("line-height");
             TxLineHeight=parseInt(TxLineHeight);
             $("#TextParam1").val(TxLineHeight);
+
+            // 文章シートの字間を取得
             var TxLineWidth=$(this).css("letter-spacing");
             TxLineWidth=parseInt(TxLineWidth);
             $("#TextParam2").val(TxLineWidth);
+
+            // 文章シートの文字サイズを取得
             var TxFontSize=$(this).css("font-size");
             TxFontSize=parseInt(TxFontSize);
             $("#TextParam3").val(TxFontSize);
@@ -87,6 +101,28 @@ function StartSaveAs(){
     DocSave2();
 }
 
+// ドキュメントの設定
+function DocSetup(){
+    $("#NoEdit").show();
+    $("#DocSetupDiag").show();
+    $("#DocPaperType").val("A4");
+}
+
+// ドキュメントの設定を保存
+function SaveDocSetup(){
+    var DocPaper=$("#DocPaperType").val();
+    $("#PaperCSS").html('<link rel="stylesheet" href="css/paper/'+DocPaper+'.css">');
+    $("#PaperCSS").attr("href","css/paper/"+DocPaper+".css");
+    $("#DocSetupDiag").hide();
+    $("#NoEdit").hide();
+}
+
+// ドキュメントの設定をキャンセル
+function CancelDocSetup(){
+    $("#DocSetupDiag").hide();
+    $("#NoEdit").hide();
+}
+
 // ドキュメントの印刷
 function DocPrint(){
     $("#Paper").printThis();
@@ -95,7 +131,7 @@ function DocPrint(){
 
 // 文字シートの追加
 function AddText(){
-    $("#Paper").append('<span class="Nghr_TextBox" style="position:absolute" id="'+NewTextID+'"><span id="tx'+NewTextID+'">新規文字シート</span></span>');
+    $("#Paper").append('<span class="Nghr_TextBox" style="position:absolute" id="ts'+NewTextID+'"><span id="tx'+NewTextID+'">新規文字シート</span></span>');
     NewTextID++;
     StartDragDrop();
     
@@ -104,19 +140,19 @@ function AddText(){
 // 行間の設定
 function ChangeLineHeight(){
     var TxLineHeight=$("#TextParam1").val();
-    $("#"+EditTextData).css("line-height",TxLineHeight+"px");
+    $("#ts"+EditTextData).css("line-height",TxLineHeight+"px");
 }
 
 // 文字間の設定
 function ChangeLineWidth(){
     var TxLineWidth=$("#TextParam2").val();
-    $("#"+EditTextData).css("letter-spacing",TxLineWidth+"px");
+    $("#ts"+EditTextData).css("letter-spacing",TxLineWidth+"px");
 }
 
 // 文字サイズの設定
 function ChangeFontSize(){
     var TxFontSize=$("#TextParam3").val();
-    $("#"+EditTextData).css("font-size",TxFontSize+"px");
+    $("#ts"+EditTextData).css("font-size",TxFontSize+"px");
 }
 
 // 文字書体の設定
@@ -129,6 +165,21 @@ function ChangeFontFamily(){
 function ChangeFontColor(){
     var TxFontColor=$("#TextFontColor").val();
     $("#tx"+EditTextData).css("color","#"+TxFontColor);
+}
+
+// 文章の左揃え
+function ChangeFontLeft(){
+    $("#ts"+EditTextData).css("text-align","left");
+}
+
+// 文章の中央揃え
+function ChangeFontCenter(){
+    $("#ts"+EditTextData).css("text-align","center");
+}
+
+// 文章の左揃え
+function ChangeFontRight(){
+    $("#ts"+EditTextData).css("text-align","right");
 }
 
 // 文字を太字にする
@@ -171,6 +222,7 @@ function ChangeFontWritingMode(){
     }
 }
 
+// テキストエリアの編集時に発火するイベント
 function CheckTxData(elm){
     var v, old = elm.value;
     return function(){
