@@ -146,6 +146,18 @@ h4{
     align-items: center;
 }
 
+/* 画像ボックス */
+.Nghr_Image{
+	position:absolute;
+	width:auto;
+	background-color:transparent;
+	padding:4;
+	overflow:hidden;
+	border:dotted 1px black;
+	display: flex;
+    align-items: center;
+}
+
 .Nghr_TextBox span,b,i,u{
 	background-color:transparent;
 	height:auto;

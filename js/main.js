@@ -8,6 +8,7 @@ Nagaharu DTP v1.0 (Dev) - main.js
 var EditText,EditTextArray,EditTextData,EditTextClass; //文章シート関連
 var FileName; //ファイル関連
 var NewTextID=0;
+var NewImageID=0;
 var fs = require('fs');
 
 jQuery(function(){
@@ -21,34 +22,62 @@ jQuery(function(){
 
 // ドラッグ＆ドロップ機能の初期化
 function StartDragDrop(){
+    // 文章シートのドラッグ
     jQuery('.Nghr_TextBox').draggable({
         containment: 'parent',
         scroll: false,
         start: function(event, ui) {
             // 編集する文章シートのIDを取得
             EditTextData=$(this).attr("id");
+            
+            var ChkImage=$("#"+EditTextData).html().indexOf("<img");
 
-            // テキストエリアに文章シートの内容を表示
-            EditText=$("#"+EditTextData).text();
-            $("#EditTxData").val(EditText);
+            if(ChkImage > -1){
+                $("#TextSheet").hide();
+                $("#ImgSheet").show();
+            }else{
+                $("#TextSheet").show();
+                $("#ImgSheet").hide();
+                // テキストエリアに文章シートの内容を表示
+                EditText=$("#"+EditTextData).text();
+                $("#EditTxData").val(EditText);
 
-            // 文章シートの行間を取得
-            var TxLineHeight=$(this).css("line-height");
-            TxLineHeight=parseInt(TxLineHeight);
-            $("#TextParam1").val(TxLineHeight);
+                // 文章シートの行間を取得
+                var TxLineHeight=$(this).css("line-height");
+                TxLineHeight=parseInt(TxLineHeight);
+                $("#TextParam1").val(TxLineHeight);
 
-            // 文章シートの字間を取得
-            var TxLineWidth=$(this).css("letter-spacing");
-            TxLineWidth=parseInt(TxLineWidth);
-            $("#TextParam2").val(TxLineWidth);
+                // 文章シートの字間を取得
+                var TxLineWidth=$(this).css("letter-spacing");
+                TxLineWidth=parseInt(TxLineWidth);
+                $("#TextParam2").val(TxLineWidth);
 
-            // 文章シートの文字サイズを取得
-            var TxFontSize=$(this).css("font-size");
-            TxFontSize=parseInt(TxFontSize);
-            $("#TextParam3").val(TxFontSize);
+                // 文章シートのフォントサイズを取得
+                var TxFontSize=$(this).css("font-size");
+                TxFontSize=parseInt(TxFontSize);
+                $("#TextParam3").val(TxFontSize);
+
+                // 文章シートのフォントを取得
+                /*
+                書体だけはシート内のspanにCSSを書き込んでいるので、
+                そこからCSSを取得します。
+                */
+                var TxFontFamily=$("#"+EditTextData+" span").css("font-family");
+                $("#TextFontFamily").val(TxFontFamily);
+
+                // 文章シートのフォント色を取得
+                var TxFontCl=$(this).css("color");
+                $("#TextFontColor").val(TxFontCl);
+            }
+            
 	    }
     });
-    jQuery('.Nghr_TextBox').resizable();
+    jQuery('.Nghr_TextBox').resizable({
+        resize: function(event, ui) {
+            EditImgData=$(this).attr("id");
+            $("#"+EditImgData+" img").width($("#"+EditImgData).width());
+        }
+    });
 }
 
 // ドキュメントの新規作成（ダイアログ表示）
@@ -154,7 +183,6 @@ function AddText(){
     $("#Paper").append('<span class="Nghr_TextBox" style="position:absolute" id="ts'+NewTextID+'"><span id="tx'+NewTextID+'">新規文字シート</span></span>');
     NewTextID++;
     StartDragDrop();
-    
 }
 
 // 行間の設定
@@ -190,16 +218,19 @@ function ChangeFontColor(){
 // 文章の左揃え
 function ChangeFontLeft(){
     $("#"+EditTextData).css("justify-content","flex-start");
+    $("#"+EditTextData).css("text-align","left");
 }
 
 // 文章の中央揃え
 function ChangeFontCenter(){
     $("#"+EditTextData).css("justify-content","center");
+    $("#"+EditTextData).css("text-align","center");
 }
 
 // 文章の右揃え
 function ChangeFontRight(){
     $("#"+EditTextData).css("justify-content","flex-end");
+    $("#"+EditTextData).css("text-align","right");
 }
 
 // 文字を太字にする
@@ -265,4 +296,34 @@ function CheckTxData(elm){
             $("#"+EditTextData+" span").html(str);
         }
     }
+}
+
+// 画像シートの作成
+function AddImage(){
+    $("#Paper").append('<span class="Nghr_TextBox" style="position:absolute" id="ts'+NewTextID+'"><img src="img/No_Image.png"></span>');
+    NewTextID++;
+    StartDragDrop();
+}
+
+function ChgImage(){
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+	img = new Image();
+	img.src = $("#ImageFile").val();
+	img.onload = function() {
+        var dstWidth, dstHeight;
+        var MIN_SIZE=640;
+        if (this.width > this.height) {
+            dstWidth = MIN_SIZE;
+            dstHeight = this.height * MIN_SIZE / this.width;
+        } else {
+            dstHeight = MIN_SIZE;
+            dstWidth = this.width * MIN_SIZE / this.height;
+        }
+	    canvas.width = dstWidth;
+	    canvas.height = dstHeight;
+        ctx.drawImage(this, 0, 0, this.width, this.height, 0, 0, dstWidth, dstHeight);
+        var img_src = canvas.toDataURL();
+        $("#"+EditTextData+" img").attr("src",img_src);
+    };
 }
