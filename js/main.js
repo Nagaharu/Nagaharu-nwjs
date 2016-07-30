@@ -11,7 +11,8 @@ var NewTextID=0;
 var fs = require('fs');
 
 jQuery(function(){
-    $("#PaperCSS").html('<link rel="stylesheet" href="css/paper/A4.css">');
+    // A4タテサイズの印刷CSSを設定
+    $("#PaperCSS").attr("href","css/paper/A4.css");
     // テキストエリアEditTxDataが編集された時に発火するイベント
     $("#EditTxData").each(function(){
         $(this).bind("keyup", CheckTxData(this));
@@ -28,7 +29,7 @@ function StartDragDrop(){
             EditTextData=$(this).attr("id");
 
             // テキストエリアに文章シートの内容を表示
-            EditText=$("#tx"+EditTextData).text();
+            EditText=$("#"+EditTextData).text();
             $("#EditTxData").val(EditText);
 
             // 文章シートの行間を取得
@@ -48,6 +49,26 @@ function StartDragDrop(){
 	    }
     });
     jQuery('.Nghr_TextBox').resizable();
+}
+
+// ドキュメントの新規作成（ダイアログ表示）
+function NewPage(){
+    $("#NoEdit").show();
+    $("#NewPageDiag").show();
+    $("#DocPaperType").val("A4");
+}
+
+// ドキュメントの新規作成を実行
+function DoNewPage(){
+    $("#Paper").empty();
+    $("#EditTxData").val("");
+    $("#TextParam1").val(20);
+    $("#TextParam2").val(0);
+    $("#TextParam3").val(14);
+    $("#TextFontFamily").val("MPlus");
+    $("#TextFontColor").val("000000");
+    $("#NewPageDiag").hide();
+    $("#NoEdit").hide();
 }
 
 // ドキュメントを開く（ダイアログ表示）
@@ -72,7 +93,7 @@ function DocSaveAs(){
 
 // ドキュメントの上書き保存
 function DocSave(){
-    if(FileName==""){
+    if(FileName==undefined){
         DocSaveAs();
     }else{
         DocSave2();
@@ -111,15 +132,14 @@ function DocSetup(){
 // ドキュメントの設定を保存
 function SaveDocSetup(){
     var DocPaper=$("#DocPaperType").val();
-    $("#PaperCSS").html('<link rel="stylesheet" href="css/paper/'+DocPaper+'.css">');
     $("#PaperCSS").attr("href","css/paper/"+DocPaper+".css");
     $("#DocSetupDiag").hide();
     $("#NoEdit").hide();
 }
 
-// ドキュメントの設定をキャンセル
-function CancelDocSetup(){
-    $("#DocSetupDiag").hide();
+// ダイアログをキャンセル
+function CancelDialog(){
+    $(".Dialog").hide();
     $("#NoEdit").hide();
 }
 
@@ -140,86 +160,99 @@ function AddText(){
 // 行間の設定
 function ChangeLineHeight(){
     var TxLineHeight=$("#TextParam1").val();
-    $("#ts"+EditTextData).css("line-height",TxLineHeight+"px");
+    $("#"+EditTextData).css("line-height",TxLineHeight+"px");
 }
 
 // 文字間の設定
 function ChangeLineWidth(){
     var TxLineWidth=$("#TextParam2").val();
-    $("#ts"+EditTextData).css("letter-spacing",TxLineWidth+"px");
+    $("#"+EditTextData).css("letter-spacing",TxLineWidth+"px");
 }
 
 // 文字サイズの設定
 function ChangeFontSize(){
     var TxFontSize=$("#TextParam3").val();
-    $("#ts"+EditTextData).css("font-size",TxFontSize+"px");
+    $("#"+EditTextData).css("font-size",TxFontSize+"px");
 }
 
 // 文字書体の設定
 function ChangeFontFamily(){
     var TxFontFamily=$("#TextFontFamily").val();
-    $("#tx"+EditTextData).css("font-family",""+TxFontFamily);
+    $("#"+EditTextData+" span").css("font-family",""+TxFontFamily);
 }
 
 // 文字色の設定
 function ChangeFontColor(){
     var TxFontColor=$("#TextFontColor").val();
-    $("#tx"+EditTextData).css("color","#"+TxFontColor);
+    $("#"+EditTextData).css("color","#"+TxFontColor);
 }
 
 // 文章の左揃え
 function ChangeFontLeft(){
-    $("#ts"+EditTextData).css("text-align","left");
+    $("#"+EditTextData).css("justify-content","flex-start");
 }
 
 // 文章の中央揃え
 function ChangeFontCenter(){
-    $("#ts"+EditTextData).css("text-align","center");
+    $("#"+EditTextData).css("justify-content","center");
 }
 
-// 文章の左揃え
+// 文章の右揃え
 function ChangeFontRight(){
-    $("#ts"+EditTextData).css("text-align","right");
+    $("#"+EditTextData).css("justify-content","flex-end");
 }
 
 // 文字を太字にする
 function ChangeFontBold(){
-    var TxFontBold=$("#tx"+EditTextData).css("font-weight");
+    var TxFontBold=$("#"+EditTextData).css("font-weight");
     if(TxFontBold=="bold"){
-        $("#tx"+EditTextData).css("font-weight","normal");
+        $("#"+EditTextData).css("font-weight","normal");
     }else{
-        $("#tx"+EditTextData).css("font-weight","bold");
+        $("#"+EditTextData).css("font-weight","bold");
     }
 }
 
 // 文字を斜体にする
 function ChangeFontItalic(){
-    var TxFontItalic=$("#tx"+EditTextData).css("font-style");
+    var TxFontItalic=$("#"+EditTextData).css("font-style");
     if(TxFontItalic=="italic"){
-        $("#tx"+EditTextData).css("font-style","normal");
+        $("#"+EditTextData).css("font-style","normal");
     }else{
-        $("#tx"+EditTextData).css("font-style","italic");
+        $("#"+EditTextData).css("font-style","italic");
     }
 }
 
 // 文字に下線を引く
 function ChangeFontUnderLine(){
-    var TxFontUnderLine=$("#tx"+EditTextData).css("text-decoration");
+    var TxFontUnderLine=$("#"+EditTextData).css("text-decoration");
     if(TxFontUnderLine=="underline"){
-        $("#tx"+EditTextData).css("text-decoration","none");
+        $("#"+EditTextData).css("text-decoration","none");
     }else{
-        $("#tx"+EditTextData).css("text-decoration","underline");
+        $("#"+EditTextData).css("text-decoration","underline");
     }
 }
 
 // 文字を縦書きにする
 function ChangeFontWritingMode(){
-    var TxFontWritingMode=$("#tx"+EditTextData).css("writing-mode");
+    var TxFontWritingMode=$("#"+EditTextData).css("writing-mode");
     if(TxFontWritingMode=="vertical-rl"){
-        $("#tx"+EditTextData).css("writing-mode","horizontal-tb");
+        $("#"+EditTextData).css("writing-mode","horizontal-tb");
     }else{
-        $("#tx"+EditTextData).css("writing-mode","tb-rl");
+        $("#"+EditTextData).css("writing-mode","tb-rl");
     }
+}
+
+//文字シートの削除ダイアログ
+function DeleteSheet(){
+    $("#NoEdit").show();
+    $("#ConfirmTxDel").show();
+}
+
+//文字シートの削除を実行
+function DoDeleteSheet(){
+    $("#"+EditTextData).remove();
+    $("#ConfirmTxDel").hide();
+    $("#NoEdit").hide();
 }
 
 // テキストエリアの編集時に発火するイベント
@@ -229,7 +262,7 @@ function CheckTxData(elm){
         if(old != (v=elm.value)){
             old = v;
             str = $(this).val().replace(/\n/g,"<br>\n");
-            $("#tx"+EditTextData).html(str);
+            $("#"+EditTextData+" span").html(str);
         }
     }
 }

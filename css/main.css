@@ -142,10 +142,14 @@ h4{
 	overflow:hidden;
 	border:dotted 1px black;
 	writing-mode: lr-tb;
+	display: flex;
+    align-items: center;
 }
 
 .Nghr_TextBox span,b,i,u{
 	background-color:transparent;
+	height:auto;
+	overflow:visible;
 }
 
 #EditMode{

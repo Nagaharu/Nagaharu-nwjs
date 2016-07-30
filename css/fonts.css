@@ -1,0 +1,26 @@
+/* 
+Nagaharu DTP - WebFont CSS v1
+
+Included:
+M+ 1c regular
+IPA P Gothic
+IPA P Mincho
+*/
+
+/* M+ 1c regular */
+@font-face {
+	font-family: 'MPlus';
+	src: url('../fonts/mplus-1c-regular.ttf');
+}
+
+/* IPA P Gothic */
+@font-face {
+	font-family: 'ipag';
+	src: url('../fonts/ipagp.ttf');
+}
+
+/* IPA P Mincho */
+@font-face {
+	font-family: 'ipam';
+	src: url('../fonts/ipamp.ttf');
+}
