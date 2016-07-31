@@ -55,6 +55,6 @@ jsColor v2.0.4
 
 jsPDF v1.2.60
 
-html2canvas v0.4.1
+html2canvas v0.5.0-alpha1
 
 Fonts : M+ 1c regular / IPA P Gothic / IPA P Mincho
