@@ -53,4 +53,8 @@ PrintThis v1.5
 
 jsColor v2.0.4
 
-M+ 1c regular フォントを同梱しています。/ Included M+ 1c regular font.
+jsPDF v1.2.60
+
+html2canvas v0.4.1
+
+Fonts : M+ 1c regular / IPA P Gothic / IPA P Mincho
