@@ -8,12 +8,12 @@ Nagaharu DTP v1.0 (Dev) - main.js
 var EditText,EditTextArray,EditTextData,EditTextClass; //文章シート関連
 var FileName; //ファイル関連
 var NewTextID=0;
-var NewImageID=0;
+var PaperSize="A4";
 var fs = require('fs');
 
 jQuery(function(){
     // A4タテサイズの印刷CSSを設定
-    $("#PaperCSS").attr("href","css/paper/A4.css");
+    $("#PaperCSS").attr("href","css/paper/"+PaperSize+".css");
     // テキストエリアEditTxDataが編集された時に発火するイベント
     $("#EditTxData").each(function(){
         $(this).bind("keyup", CheckTxData(this));
@@ -29,9 +29,7 @@ function StartDragDrop(){
         start: function(event, ui) {
             // 編集する文章シートのIDを取得
             EditTextData=$(this).attr("id");
-            
             var ChkImage=$("#"+EditTextData).html().indexOf("<img");
-
             if(ChkImage > -1){
                 $("#TextSheet").hide();
                 $("#ImgSheet").show();
@@ -89,6 +87,14 @@ function NewPage(){
 
 // ドキュメントの新規作成を実行
 function DoNewPage(){
+    $("#TextSheet").hide();
+    $("#ImgSheet").hide();
+    // 変数の初期化
+    NewTextID=0;
+    PaperSize="A4";
+    FileName="";
+    document.title="Nagaharu DTP";
+    // 入力欄の初期化
     $("#Paper").empty();
     $("#EditTxData").val("");
     $("#TextParam1").val(20);
@@ -108,8 +114,14 @@ function DocLoad(){
 // ドキュメントを開く（実際の処理）
 function StartLoad(){
     FileName=$("#DataLoad").val();
-    var NghrHTML=fs.readFileSync(FileName);
-    $("#Paper").html(''+NghrHTML);
+    var NghrData=fs.readFileSync(FileName);
+    var NghrHTML=JSON.parse(NghrData);
+    // 変数を初期化
+    NewTextID=parseInt(NghrHTML[0]);
+    PaperSize=NghrHTML[1];
+    $("#DocPaperType").val(PaperSize);
+    // 内容を反映
+    $("#Paper").html(""+NghrHTML[3]);
     // ドラッグ操作を有効化
     StartDragDrop();
     document.title = FileName+" - Nagaharu DTP";
@@ -132,7 +144,12 @@ function DocSave(){
 // 保存共通処理（上書き／別名）
 function DocSave2(){
     jQuery('.Nghr_TextBox').resizable("destroy");
-    var strData=$("#Paper").html();
+    var strData = new Array;
+    strData[0]=""+NewTextID
+    strData[1]=PaperSize;
+    strData[2]="Nagaharu Document";
+    strData[3]=$("#Paper").html();
+    var strData = JSON.stringify(strData);
     fs.writeFile(FileName, strData, function(err) {
 	    if(err) {
 	        alert("保存に失敗しました。");
@@ -155,15 +172,15 @@ function StartSaveAs(){
 function DocSetup(){
     $("#NoEdit").show();
     $("#DocSetupDiag").show();
-    $("#DocPaperType").val("A4");
+    $("#DocPaperType").val(PaperSize);
 }
 
 // ドキュメントの設定を保存
 function SaveDocSetup(){
-    var DocPaper=$("#DocPaperType").val();
-    $("#PaperCSS").attr("href","css/paper/"+DocPaper+".css");
+    PaperSize=$("#DocPaperType").val();
     $("#DocSetupDiag").hide();
     $("#NoEdit").hide();
+    $("#PaperCSS").attr("href","css/paper/"+PaperSize+".css")
 }
 
 // ダイアログをキャンセル
@@ -174,9 +191,63 @@ function CancelDialog(){
 
 // ドキュメントの印刷
 function DocPrint(){
-    $("#Paper").printThis();
+    if(NewTextID==0){
+        $("#NoEdit").show();
+        $("#NoPrintDiag").show();
+    }else{
+        $("#Paper").printThis();
+    }
 }
 
+// 出力ダイアログ表示
+function Export(){
+    $("#NoEdit").show();
+    $("#ExportDiag").show();
+}
+
+// HTMLで出力
+function ExportHTML(){
+    var WebFileName=$("#ExportWeb").val();
+    var num = WebFileName.indexOf(".html",0);
+    if (num == -1) WebFileName=WebFileName+".html";
+    var HTMLData='<html><head><title>Nagaharu DTP</title><meta charset="utf-8"></head><body>';
+    HTMLData+=$("#Paper").html();
+    HTMLData+="</body></html>";
+    fs.writeFile(WebFileName, HTMLData, function(err) {
+	    if(err) {
+	        alert("出力に失敗しました。");
+	    }
+	});
+    $("#ExportDiag").hide();
+    $("#NoEdit").hide();
+}
+
+// PNGで出力
+function ExportPNG(){
+    var PictureFileName=$("#ExportPicture").val();
+    var num = PictureFileName.indexOf(".png",0);
+    if (num == -1) PictureFileName=PictureFileName+".png";
+    // 画像に映らないようドラッグ枠を消す
+    jQuery('.Nghr_TextBox').draggable("destroy");
+    jQuery('.Nghr_TextBox').resizable("destroy");
+    $('.Nghr_TextBox').css("border","none");
+    // 用紙divをPNGに変換
+    var dmy = document.getElementById("Paper");
+    var pw = $("#Paper").width;
+    var ph = $("#Paper").height;
+    html2canvas(dmy).then(function(canvas){
+        var dataurl = canvas.toDataURL('image/png');
+        dataurl = dataurl.replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
+	    fs.writeFile(PictureFileName, dataurl, 'base64', function(err) {
+	        console.log(err);
+	    });
+        StartDragDrop();
+        $("#ExportDiag").hide();
+        $("#NoEdit").hide();
+    }).catch(function(err){
+        alert("出力に失敗しました。");
+    });
+}
 
 // 文字シートの追加
 function AddText(){
@@ -306,8 +377,8 @@ function AddImage(){
 }
 
 function ChgImage(){
-	var canvas = document.getElementById('canvas');
-	var ctx = canvas.getContext('2d');
+	var pic_canvas = document.getElementById('LoadPicCanvas');
+	var ctx = pic_canvas.getContext('2d');
 	img = new Image();
 	img.src = $("#ImageFile").val();
 	img.onload = function() {
@@ -320,10 +391,10 @@ function ChgImage(){
             dstHeight = MIN_SIZE;
             dstWidth = this.width * MIN_SIZE / this.height;
         }
-	    canvas.width = dstWidth;
-	    canvas.height = dstHeight;
+	    pic_canvas.width = dstWidth;
+	    pic_canvas.height = dstHeight;
         ctx.drawImage(this, 0, 0, this.width, this.height, 0, 0, dstWidth, dstHeight);
-        var img_src = canvas.toDataURL();
+        var img_src = pic_canvas.toDataURL();
         $("#"+EditTextData+" img").attr("src",img_src);
     };
 }

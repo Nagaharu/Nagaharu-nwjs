@@ -1,16 +1,13 @@
 /*
-Nagaharu DTP
-A4-size (landscape) Sheet Settings v1
-
+Nagaharu DTP v1.0 (Dev) - Print CSS A4(Landscape)
 (c)2016 Sora Arkw all rights reserved.
 */
 
 @page{
-	margin:0;
-	size: A4 landscape;
+    size:landscape;
 }
 
 #Paper{
-    width:1120px;
-	height:792px;
+    width:297mm;
+    height:210mm;
 }

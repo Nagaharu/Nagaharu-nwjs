@@ -13,13 +13,13 @@
 		<script src="js/jquery-ui.js"></script>
 		<script src="js/printThis.js"></script>
 		<script src="js/jscolor.min.js"></script>
-		<script src="js/language.js"></script>
+		<script src="js/html2canvas.js"></script>
 		<script src="js/main.js"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 	</head>
 	<body>
-		<canvas width="600" height="600" id="canvas" style="display:none;"></canvas>
-
+		<canvas width="600" height="600" id="LoadPicCanvas" style="display:none;"></canvas>
+		
 		<!-- 編集禁止幕 -->
 		<div id="NoEdit" style="display:none;"></div>
 
@@ -42,11 +42,11 @@
 			<div style="font-size:20px;overflow:hidden;">文書の設定</div><br>
 			<table>
 				<tr>
-					<td align="right">用紙サイズ：</td>
+					<td align="right">用紙の向き：</td>
 					<td width="60%">
 						<select id="DocPaperType">
-							<option value="A4">A4 タテ</option>
-							<option value="A4_landscape">A4 ヨコ</option>
+							<option value="A4">タテ</option>
+							<option value="A4_landscape">ヨコ</option>
 						</select>
 					</td>
 				</tr>
@@ -55,9 +55,42 @@
 			<a class="DialogBtn" style="font-size:18px;" href="javascript:CancelDialog()">キャンセル</a>
 		</div>
 
+		<!-- 出力ダイアログ -->
+		<div id="ExportDiag" class="Dialog" style="display:none;">
+			<div style="font-size:20px;overflow:hidden;">文書の出力</div><br>
+			<table style="font-size:18px;">
+				<tr>
+					<td>
+						<a id="TextStyleLink" href="javascript:$('#ExportWeb').click()"><u>HTML形式</u></a>
+					</td>
+					<td>
+						<font size="3">データをWebページとして出力します。</font>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<a id="TextStyleLink" href="javascript:$('#ExportPicture').click()"><u>PNG形式</u></a>
+					</td>
+					<td>
+						<font size="3">データをPNG形式の画像として出力します。<br>
+					</td>
+				</tr>
+			</table><br>
+			<a class="DialogBtn" style="font-size:18px;" href="javascript:CancelDialog()">キャンセル</a>
+		</div>
+
+		<!-- 新規作成の確認ダイアログ -->
+		<div id="NoPrintDiag" class="Dialog" style="display:none;">
+			<div style="font-size:20px;overflow:hidden;">シートが設置されていない文書は印刷できません。</div><br>
+			<a class="DialogBtn" style="font-size:18px;" href="javascript:CancelDialog()">OK</a>
+		</div>
+
 		<!-- 開く / 保存ダイアログ -->
 		<input type="file" id="DataSaveAs" nwsaveas style="display:none;" onchange="StartSaveAs()">
 		<input type="file" id="DataLoad" style="display:none;" onchange="StartLoad()">
+		<input type="file" id="ExportWeb" nwsaveas style="display:none;" onchange="ExportHTML()">
+		<input type="file" id="ExportPicture" nwsaveas style="display:none;" onchange="ExportPNG()">
+		<input type="file" id="ExportPDFData" nwsaveas style="display:none;" onchange="ExportPDF()">
 
 		<!-- ヘッダーメニュー -->
 		<div id="header">
@@ -67,12 +100,15 @@
 			<div class="btn" onclick="javascript:DocSaveAs()">別名で保存</div>
 			<div class="btn" onclick="javascript:DocSetup()">文書の設定</div>
 			<div class="btn" onclick="javascript:DocPrint()">印刷</div>
+			<div class="btn" onclick="javascript:Export()">出力</div>
 		</div>
+
 		<!-- 左側 (紙) -->
 		<div id="left">
 			<div id="Paper">
 			</div>
 		</div>
+
 		<!-- 右側 (ツールバー) -->
 		<div id="right">
 			<!-- 部品の作成 -->
@@ -80,7 +116,7 @@
 			<div id="btn_toolbox" onclick="javascript:AddText()">文字</div>
 			<div id="btn_toolbox" onclick="javascript:AddImage()">画像</div>
 			<!-- 文字シート設定 -->
-			<div style="height:45%;clear:left;" id="TextSheet">
+			<div style="height:45%;clear:left;display:none;overflow-y:scroll" id="TextSheet">
 				<div style="font-size:20px;overflow:hidden;">文字シートの設定</div>
 				<textarea id="EditTxData"></textarea><br>
 				<div style="line-height:34px;">
@@ -170,8 +206,8 @@
 				</div>
 				
 			</div>
-			<div style="height:45%;clear:left;" id="ImgSheet" style="display:none;">
-				<div style="font-size:20px;overflow:hidden;">画像シートの設定</div>
+			<div style="height:45%;clear:left;display:none;overflow-y:scroll" id="ImgSheet">
+				<div style="font-size:20px;overflow:hidden">画像シートの設定</div>
 				<div style="line-height:34px;">
 					<table>
 						<tr>
