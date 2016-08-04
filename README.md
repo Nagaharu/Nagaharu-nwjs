@@ -1,4 +1,7 @@
 # Nagaharu-nwjs
+
+###This software is Japanese-language only. Sorry:(
+
 ##Japanese / 日本語
 ###概要
 簡単DTPソフトウェア「Nagaharu」のnode-webkit版です。
