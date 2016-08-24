@@ -29,4 +29,4 @@ jsColor v2.0.4
 
 html2canvas v0.5.0-alpha1
 
-Fonts : M+ 1c regular / IPA Pゴシック / IPA P明朝
+Fonts : Migmix 1p regular / IPA Pゴシック / IPA P明朝
