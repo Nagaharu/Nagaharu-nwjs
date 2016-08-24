@@ -1,8 +1,6 @@
 /*
 Nagaharu DTP v1.0 (Dev) - main.js
-(c)2016 Sora Arkw all rights reserved.
-
-
+(c)2016 Sora Arakawa. all rights reserved.
 */
 
 var EditText,EditTextArray,EditTextData,EditTextClass; //文章シート関連
@@ -180,7 +178,7 @@ function SaveDocSetup(){
     PaperSize=$("#DocPaperType").val();
     $("#DocSetupDiag").hide();
     $("#NoEdit").hide();
-    $("#PaperCSS").attr("href","css/paper/"+PaperSize+".css")
+    $("#PaperCSS").attr("href","css/paper/"+PaperSize+".css");
 }
 
 // ダイアログをキャンセル

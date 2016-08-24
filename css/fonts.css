@@ -2,15 +2,15 @@
 Nagaharu DTP - WebFont CSS v1
 
 Included:
-M+ 1c regular
+Migmix 1p regular
 IPA P Gothic
 IPA P Mincho
 */
 
 /* M+ 1c regular */
 @font-face {
-	font-family: 'MPlus';
-	src: url('../fonts/mplus-1c-regular.ttf');
+	font-family: 'Migmix';
+	src: url('../fonts/migmix-1p-regular.ttf');
 }
 
 /* IPA P Gothic */

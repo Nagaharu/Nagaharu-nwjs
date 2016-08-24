@@ -110,16 +110,17 @@
 
 		<!-- 右側 (ツールバー) -->
 		<div id="right">
+			<div id="right_img"></div>
 			<!-- 部品の作成 -->
-			<div style="font-size:20px;overflow:hidden;">新規部品</div>
+			<div style="font-size:20px;overflow:hidden;background-color:transparent;">新規部品</div>
 			<div id="btn_toolbox" onclick="javascript:AddText()">文字</div>
 			<div id="btn_toolbox" onclick="javascript:AddImage()">画像</div>
 			<!-- 文字シート設定 -->
-			<div style="height:45%;clear:left;display:none;overflow-y:scroll" id="TextSheet">
-				<div style="font-size:20px;overflow:hidden;">文字シートの設定</div>
+			<div style="height:45%;clear:left;display:none;overflow-y:scroll;" id="TextSheet">
+				<div style="font-size:20px;overflow:hidden;background-color:transparent;">文字シートの設定</div>
 				<textarea id="EditTxData"></textarea><br>
 				<div style="line-height:34px;">
-					<table>
+					<table style="background-color:transparent;">
 						<!-- 行間 -->
 						<tr>
 							<td align="right">行間：</td>
@@ -140,7 +141,7 @@
 							<td align="right">フォント：</td>
 							<td>
 								<select id="TextFontFamily" onchange="javascript:ChangeFontFamily()">
-									<option value="MPlus">M+ 1c Regular</option>
+									<option value="Migmix">Migmix 1p regular</option>
 									<option value="ipag" style="font-family:'ipag'">IPA Pゴシック</option>
 									<option value="ipam" style="font-family:'ipam'">IPA P明朝</option>
 								</select>
@@ -154,7 +155,7 @@
 							</td>
 						</tr>
 					</table>
-					<table style="table-layout: fixed;width:100%">
+					<table style="table-layout:fixed;width:100%;">
 						<tr>
 							<td align="center" width="33%">
 								<a id="TextStyleLink" href="javascript:ChangeFontLeft()">
