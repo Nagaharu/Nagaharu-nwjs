@@ -27,43 +27,55 @@ function StartDragDrop(){
         start: function(event, ui) {
             // 編集する文章シートのIDを取得
             EditTextData=$(this).attr("id");
+            EditTextClass
             var ChkImage=$("#"+EditTextData).html().indexOf("<img");
             if(ChkImage > -1){
                 $("#TextSheet").hide();
+                $("#ShapeSheet").hide();
                 $("#ImgSheet").show();
             }else{
-                $("#TextSheet").show();
-                $("#ImgSheet").hide();
-                // テキストエリアに文章シートの内容を表示
-                EditText=$("#"+EditTextData).text();
-                $("#EditTxData").val(EditText);
+                var ChkShape=$(this).attr("class").indexOf("Shape");
+                if(ChkShape>-1){
+                    $("#TextSheet").hide();
+                    $("#ImgSheet").hide();
+                    $("#ShapeSheet").show();
+                    $("#ShapeCSS").val($("#"+EditTextData).css("border-radius"));
+                    $("#ShapeBGColor").val($("#"+EditTextData).css("background-color"));
+                }else{
+                    $("#TextSheet").show();
+                    $("#ImgSheet").hide();
+                    $("#ShapeSheet").hide();
+                    // テキストエリアに文章シートの内容を表示
+                    EditText=$("#"+EditTextData).text();
+                    $("#EditTxData").val(EditText);
 
-                // 文章シートの行間を取得
-                var TxLineHeight=$(this).css("line-height");
-                TxLineHeight=parseInt(TxLineHeight);
-                $("#TextParam1").val(TxLineHeight);
+                    // 文章シートの行間を取得
+                    var TxLineHeight=$(this).css("line-height");
+                    TxLineHeight=parseInt(TxLineHeight);
+                    $("#TextParam1").val(TxLineHeight);
 
-                // 文章シートの字間を取得
-                var TxLineWidth=$(this).css("letter-spacing");
-                TxLineWidth=parseInt(TxLineWidth);
-                $("#TextParam2").val(TxLineWidth);
+                    // 文章シートの字間を取得
+                    var TxLineWidth=$(this).css("letter-spacing");
+                    TxLineWidth=parseInt(TxLineWidth);
+                    $("#TextParam2").val(TxLineWidth);
 
-                // 文章シートのフォントサイズを取得
-                var TxFontSize=$(this).css("font-size");
-                TxFontSize=parseInt(TxFontSize);
-                $("#TextParam3").val(TxFontSize);
+                    // 文章シートのフォントサイズを取得
+                    var TxFontSize=$(this).css("font-size");
+                    TxFontSize=parseInt(TxFontSize);
+                    $("#TextParam3").val(TxFontSize);
 
-                // 文章シートのフォントを取得
-                /*
-                書体だけはシート内のspanにCSSを書き込んでいるので、
-                そこからCSSを取得します。
-                */
-                var TxFontFamily=$("#"+EditTextData+" span").css("font-family");
-                $("#TextFontFamily").val(TxFontFamily);
+                    // 文章シートのフォントを取得
+                    /*
+                    書体だけはシート内のspanにCSSを書き込んでいるので、
+                    そこからCSSを取得します。
+                    */
+                    var TxFontFamily=$("#"+EditTextData+" span").css("font-family");
+                    $("#TextFontFamily").val(TxFontFamily);
 
-                // 文章シートのフォント色を取得
-                var TxFontCl=$(this).css("color");
-                $("#TextFontColor").val(TxFontCl);
+                    // 文章シートのフォント色を取得
+                    var TxFontCl=$(this).css("color");
+                    $("#TextFontColor").val(TxFontCl);
+                }
             }
             
 	    }
@@ -208,7 +220,7 @@ function ExportHTML(){
     var WebFileName=$("#ExportWeb").val();
     var num = WebFileName.indexOf(".html",0);
     if (num == -1) WebFileName=WebFileName+".html";
-    var HTMLData='<html><head><title>Nagaharu DTP</title><meta charset="utf-8"></head><body>';
+    var HTMLData='<html><head><title>Nagaharu DTP</title><meta charset="utf-8"><style>.ShapeSquare{width: 100%;height: 100%;border-radius:0%;background: black;}.Nghr_TextBox{position:relative;}</style></head><body>';
     HTMLData+=$("#Paper").html();
     HTMLData+="</body></html>";
     fs.writeFile(WebFileName, HTMLData, function(err) {
@@ -240,6 +252,7 @@ function ExportPNG(){
 	        console.log(err);
 	    });
         StartDragDrop();
+        $('.Nghr_TextBox').css("border","dotted 1px black");
         $("#ExportDiag").hide();
         $("#NoEdit").hide();
     }).catch(function(err){
@@ -367,13 +380,14 @@ function CheckTxData(elm){
     }
 }
 
-// 画像シートの作成
+// 画像シートの追加
 function AddImage(){
     $("#Paper").append('<span class="Nghr_TextBox" style="position:absolute" id="ts'+NewTextID+'"><img src="img/No_Image.png"></span>');
     NewTextID++;
     StartDragDrop();
 }
 
+// 画像シートの画像変更処理
 function ChgImage(){
 	var pic_canvas = document.getElementById('LoadPicCanvas');
 	var ctx = pic_canvas.getContext('2d');
@@ -395,4 +409,21 @@ function ChgImage(){
         var img_src = pic_canvas.toDataURL();
         $("#"+EditTextData+" img").attr("src",img_src);
     };
+}
+
+// 図形シートの追加
+function AddShape(){
+    $("#Paper").append('<span class="ShapeSquare Nghr_TextBox" style="position:absolute;width:128px;height:128px;" id="ts'+NewTextID+'"></span>');
+    NewTextID++;
+    StartDragDrop();
+}
+
+// 図形の変更
+function ChangeShapeCSS(){
+    $("#"+EditTextData).css("border-radius",$("#ShapeCSS").val());
+}
+
+// 図形の背景色変更
+function ChangeShapeBG(){
+    $("#"+EditTextData).css("background-color","#"+$("#ShapeBGColor").val());
 }

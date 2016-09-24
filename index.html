@@ -115,6 +115,7 @@
 			<div style="font-size:20px;overflow:hidden;background-color:transparent;">新規部品</div>
 			<div id="btn_toolbox" onclick="javascript:AddText()">文字</div>
 			<div id="btn_toolbox" onclick="javascript:AddImage()">画像</div>
+			<div id="btn_toolbox" onclick="javascript:AddShape()">図形</div>
 			<!-- 文字シート設定 -->
 			<div style="height:45%;clear:left;display:none;overflow-y:scroll;" id="TextSheet">
 				<div style="font-size:20px;overflow:hidden;background-color:transparent;">文字シートの設定</div>
@@ -216,6 +217,36 @@
 							</td>
 							<td width="50%">
 								<input type="file" id="ImageFile" onchange="ChgImage()" style="background-color:transparent;color:rgb(230,230,230)">
+							</td>
+						</tr>
+						<tr>
+							<td align="center" width="50%" colspan="2">
+								<a id="TextStyleLink" href="javascript:DeleteSheet()" style="color:rgb(230,28,36)">
+									シートの削除
+								</a>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div style="height:45%;clear:left;display:none;overflow-y:scroll" id="ShapeSheet">
+				<div style="font-size:20px;overflow:hidden">図形シートの設定</div>
+				<div style="line-height:34px;">
+					<table>
+						<tr>
+							<td align="right">図形の種類：</td>
+							<td>
+								<select id="ShapeCSS" onchange="javascript:ChangeShapeCSS()">
+									<option value="0%">四角形</option>
+									<option value="10%">角を丸めた四角形</option>
+									<option value="50%">丸</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td align="right">背景色：</td>
+							<td>
+								<input type="text" id="ShapeBGColor" class="jscolor" value="000000" onchange="javascript:ChangeShapeBG()">
 							</td>
 						</tr>
 						<tr>
