@@ -17,11 +17,11 @@
 https://drive.google.com/open?id=1ELMwTBPD8LdlW9EikiPa4JuHkZSCNmGuldWUajyrttE
 
 ##ライブラリ
-Node-webkit v0.16.1
+Node-webkit v0.18.6
 
 jquery v1.12.3
 
-jquery UI v1.12.0
+jquery UI v1.12.1
 
 PrintThis v1.5
 
