@@ -3,13 +3,15 @@
 ###This software is Japanese-language only. Sorry:(
 
 ###概要
-簡単DTPソフトウェア「Nagaharu」のnode-webkit版です。
+簡単文書編集ソフトウェア「Nagaharu」のNW.js版です。
 ###使用方法
 最も簡単な方法を記述しておきます。
 
+http://nwjs.io から最新のNW.jsを入手して下さい。
+
 1、リポジトリをZIPファイルとしてダウンロード
 
-2、「Nagaharu-nwjs-master」フォルダをNode-webkitにぶっ込む
+2、「Nagaharu-nwjs-master」フォルダをNW.jsにぶっ込む
 
 ##機能
 増えてきたので、表にまとめました。以下のアドレスから閲覧可能です。
