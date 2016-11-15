@@ -4,7 +4,7 @@ Nagaharu DTP v1.0 (Dev) - Print CSS A4(Portrait)
 */
 
 @page{
-    size:portrait;
+    size:A4 portrait;
 }
 
 #Paper{

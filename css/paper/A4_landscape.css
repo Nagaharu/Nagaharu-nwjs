@@ -4,10 +4,10 @@ Nagaharu DTP v1.0 (Dev) - Print CSS A4(Landscape)
 */
 
 @page{
-    size:landscape;
+    size:A4 landscape;
 }
 
 #Paper{
     width:297mm;
-    height:210mm;
+    height:209mm;
 }
