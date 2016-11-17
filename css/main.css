@@ -1,8 +1,5 @@
 /*
-Nagaharu DTP v1.0 (Dev) - main.css
-(c)2016 Sora Arkw all rights reserved.
-
-
+Main CSS
 */
 
 @page{
@@ -50,6 +47,10 @@ h4{
 	color:rgb(212,212,212);
 	border:solid 2px rgb(212,212,212);
 	padding:10px;
+}
+
+.Dialog td{
+	color:rgb(212,212,212);
 }
 
 .DialogBtn{
@@ -129,6 +130,11 @@ h4{
 	float:right;
 }
 
+#right td{
+	color:rgb(212,212,212);
+	height:30px;
+}
+
 #right input,select,option{
 	background-color:rgb(212,212,212);
 	color:rgb(38,37,37);
@@ -142,7 +148,6 @@ h4{
 	position:absolute;
 	width:auto;
 	background-color:transparent;
-	padding:4;
 	font-size:14px;
 	line-height:20px;
 	letter-spacing:0px;
@@ -151,6 +156,7 @@ h4{
 	writing-mode: lr-tb;
 	display: flex;
     align-items: center;
+	z-index:2;
 }
 
 .Nghr_TextBox span,b,i,u{

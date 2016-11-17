@@ -1,6 +1,5 @@
 /*
-Nagaharu DTP v1.0 (Dev) - main.js
-(c)2016 Sora Arakawa. all rights reserved.
+Nagaharu Main Script
 */
 
 var EditText,EditTextArray,EditTextData,EditTextClass; //文章シート関連
@@ -260,6 +259,11 @@ function ExportPNG(){
     });
 }
 
+// ヘルプ画面の表示
+function showHelp(){
+    window.open("help.html", "Nagaharu ヘルプ", "width=300,height=200,scrollbars=yes");
+}
+
 // 文字シートの追加
 function AddText(){
     $("#Paper").append('<span class="Nghr_TextBox" style="position:absolute" id="ts'+NewTextID+'"><span id="tx'+NewTextID+'">新規文字シート</span></span>');
@@ -343,6 +347,38 @@ function ChangeFontUnderLine(){
     }else{
         $("#"+EditTextData).css("text-decoration","underline");
     }
+}
+
+// 文字レイヤーを前面へ
+function ChangeLayerUp(){
+    var TxLayer=$("#"+EditTextData).css("z-index");
+    if(TxLayer<99){
+        TxLayer++;
+    }
+    $("#"+EditTextData).css("z-index",TxLayer);
+}
+
+// 文字レイヤーを背面へ
+function ChangeLayerDown(){
+    var TxLayer=$("#"+EditTextData).css("z-index");
+    if(TxLayer>0){
+        TxLayer--;
+    }
+    $("#"+EditTextData).css("z-index",TxLayer);
+}
+
+// 文字レイヤーを最前面へ
+function ChangeLayerMostUp(){
+    var TxLayer=$("#"+EditTextData).css("z-index");
+    TxLayer=99;
+    $("#"+EditTextData).css("z-index",TxLayer);
+}
+
+// 文字レイヤーを再背面へ
+function ChangeLayerMostDown(){
+    var TxLayer=$("#"+EditTextData).css("z-index");
+    TxLayer=0;
+    $("#"+EditTextData).css("z-index",TxLayer);
 }
 
 // 文字を縦書きにする

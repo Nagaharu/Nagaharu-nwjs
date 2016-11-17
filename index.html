@@ -1,4 +1,12 @@
-<!DOCTYPE html>
+<!--
+	Nagaharu Ver.1.0 Beta4
+	(c)2015-2016 Sora Arakawa all rights reserved.
+	This Software is MIT License.
+
+	http://nagaharu.github.io/
+-->
+
+<!DOCTYPE>
 <html lang="ja">
 	<head>
 		<meta charset="utf-8">
@@ -100,6 +108,7 @@
 			<div class="btn" onclick="javascript:DocSetup()">文書の設定</div>
 			<div class="btn" onclick="javascript:DocPrint()">印刷</div>
 			<div class="btn" onclick="javascript:Export()">出力</div>
+			<div class="btn" onclick="javascript:showHelp()">ヘルプ</div>
 		</div>
 
 		<!-- 左側 (紙) -->
@@ -117,7 +126,7 @@
 			<div id="btn_toolbox" onclick="javascript:AddImage()">画像</div>
 			<div id="btn_toolbox" onclick="javascript:AddShape()">図形</div>
 			<!-- 文字シート設定 -->
-			<div style="height:45%;clear:left;display:none;overflow-y:scroll;" id="TextSheet">
+			<div style="height:70%;clear:left;display:none;overflow-y:scroll;" id="TextSheet">
 				<div style="font-size:20px;overflow:hidden;background-color:transparent;">文字シートの設定</div>
 				<textarea id="EditTxData"></textarea><br>
 				<div style="line-height:34px;">
@@ -192,6 +201,30 @@
 							</td>
 						</tr>
 						<tr>
+							<td align="center" width="50%" colspan="2">
+								<a id="TextStyleLink" href="javascript:ChangeLayerUp()">
+									前面へ移動
+								</a>
+							</td>
+							<td align="center" width="50%" colspan="2">
+								<a id="TextStyleLink" href="javascript:ChangeLayerDown()">
+									背面へ移動
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td align="center" width="50%" colspan="2">
+								<a id="TextStyleLink" href="javascript:ChangeLayerMostUp()">
+									最前面
+								</a>
+							</td>
+							<td align="center" width="50%" colspan="2">
+								<a id="TextStyleLink" href="javascript:ChangeLayerMostDown()">
+									最背面
+								</a>
+							</td>
+						</tr>
+						<tr>
 							<td align="center" width="50%">
 								<a id="TextStyleLink" href="javascript:ChangeFontWritingMode()">
 									縦書き
@@ -207,16 +240,40 @@
 				</div>
 				
 			</div>
-			<div style="height:45%;clear:left;display:none;overflow-y:scroll" id="ImgSheet">
+			<div style="height:70%;clear:left;display:none;overflow-y:scroll" id="ImgSheet">
 				<div style="font-size:20px;overflow:hidden">画像シートの設定</div>
-				<div style="line-height:34px;">
-					<table>
+				
+					<table style="table-layout:fixed;width:100%;">
 						<tr>
 							<td align="right" width="50%">
 								画像ファイル：
 							</td>
 							<td width="50%">
 								<input type="file" id="ImageFile" onchange="ChgImage()" style="background-color:transparent;color:rgb(230,230,230)">
+							</td>
+						</tr>
+						<tr>
+							<td align="center" width="50%">
+								<a id="TextStyleLink" href="javascript:ChangeLayerUp()">
+									前面へ移動
+								</a>
+							</td>
+							<td align="center" width="50%">
+								<a id="TextStyleLink" href="javascript:ChangeLayerDown()">
+									背面へ移動
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td align="center" width="50%">
+								<a id="TextStyleLink" href="javascript:ChangeLayerMostUp()">
+									最前面
+								</a>
+							</td>
+							<td align="center" width="50%">
+								<a id="TextStyleLink" href="javascript:ChangeLayerMostDown()">
+									最背面
+								</a>
 							</td>
 						</tr>
 						<tr>
@@ -227,9 +284,9 @@
 							</td>
 						</tr>
 					</table>
-				</div>
+				
 			</div>
-			<div style="height:45%;clear:left;display:none;overflow-y:scroll" id="ShapeSheet">
+			<div style="height:70%;clear:left;display:none;overflow-y:scroll" id="ShapeSheet">
 				<div style="font-size:20px;overflow:hidden">図形シートの設定</div>
 				<div style="line-height:34px;">
 					<table>
@@ -247,6 +304,30 @@
 							<td align="right">背景色：</td>
 							<td>
 								<input type="text" id="ShapeBGColor" class="jscolor" value="000000" onchange="javascript:ChangeShapeBG()">
+							</td>
+						</tr>
+						<tr>
+							<td align="center" width="50%">
+								<a id="TextStyleLink" href="javascript:ChangeLayerUp()">
+									前面へ移動
+								</a>
+							</td>
+							<td align="center" width="50%">
+								<a id="TextStyleLink" href="javascript:ChangeLayerDown()">
+									背面へ移動
+								</a>
+							</td>
+						</tr>
+						<tr>
+							<td align="center" width="50%">
+								<a id="TextStyleLink" href="javascript:ChangeLayerMostUp()">
+									最前面
+								</a>
+							</td>
+							<td align="center" width="50%">
+								<a id="TextStyleLink" href="javascript:ChangeLayerMostDown()">
+									最背面
+								</a>
 							</td>
 						</tr>
 						<tr>

@@ -1,0 +1,18 @@
+#Wrap{
+    width:98%;
+    margin:auto;
+    padding:10px 0;
+    overflow:hidden;
+    font-family:"Migmix";
+}
+
+#WrapLeft{
+    width:49%;
+    float:left;
+    text-align:center;
+}
+
+#WrapRight{
+    width:49%;
+    float:right;
+}

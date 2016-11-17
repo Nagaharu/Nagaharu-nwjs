@@ -1,4 +1,7 @@
-/* 印刷の設定 */
+/*
+Print Setup Main CSS
+*/
+
 @media print {
   .ui-resizable-e,.ui-resizable-s,.ui-resizable-se{
     width:0;
