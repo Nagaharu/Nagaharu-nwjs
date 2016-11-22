@@ -24,7 +24,7 @@ var win = require('nw.gui').Window.get();
 win.on("close",function(){
     $("#NoEdit").show();
     $("#ExitDiag").show();
-})
+});
 
 // ドラッグ＆ドロップ機能の初期化
 function StartDragDrop(){
