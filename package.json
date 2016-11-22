@@ -4,7 +4,7 @@
   "window":{
 	  "width": 1024,
 	  "height": 600,
-	  "min_width": 800,
+	  "min_width": 1024,
 	  "min_height": 600,
     "toolbar": false
   }

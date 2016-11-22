@@ -95,9 +95,16 @@
 
 		<!-- 開く / 保存ダイアログ -->
 		<input type="file" id="DataSaveAs" nwsaveas style="display:none;" onchange="StartSaveAs()">
-		<input type="file" id="DataLoad" style="display:none;" onchange="StartLoad()">
+		<input type="file" id="DataLoad" style="display:none;" onchange="StartLoad()" accept=".ngr">
 		<input type="file" id="ExportWeb" nwsaveas style="display:none;" onchange="ExportHTML()">
 		<input type="file" id="ExportPicture" nwsaveas style="display:none;" onchange="ExportPNG()">
+
+		<!-- 終了の確認ダイアログ -->
+		<div id="ExitDiag" class="Dialog" style="display:none;">
+			<div style="font-size:20px;overflow:hidden;">Nagaharuを終了しますか？</div><br>
+			<a class="DialogBtn" style="font-size:18px;" href="javascript:ExitNghr()">はい</a>
+			<a class="DialogBtn" style="font-size:18px;" href="javascript:CancelDialog()">いいえ</a>
+		</div>
 		
 		<!-- ヘッダーメニュー -->
 		<div id="header">
@@ -121,7 +128,7 @@
 		<div id="right">
 			<div id="right_img"></div>
 			<!-- 部品の作成 -->
-			<div style="font-size:20px;overflow:hidden;background-color:transparent;">新規部品</div>
+			<div style="font-size:20px;overflow:hidden;background-color:transparent;">新規シート</div>
 			<div id="btn_toolbox" onclick="javascript:AddText()">文字</div>
 			<div id="btn_toolbox" onclick="javascript:AddImage()">画像</div>
 			<div id="btn_toolbox" onclick="javascript:AddShape()">図形</div>
@@ -151,7 +158,7 @@
 							<td align="right">フォント：</td>
 							<td>
 								<select id="TextFontFamily" onchange="javascript:ChangeFontFamily()">
-									<option value="Migmix">Migmix 1p regular</option>
+									<option value="Migmix">Migmix 1p Regular</option>
 									<option value="ipag" style="font-family:'ipag'">IPA Pゴシック</option>
 									<option value="ipam" style="font-family:'ipam'">IPA P明朝</option>
 								</select>
@@ -249,7 +256,7 @@
 								画像ファイル：
 							</td>
 							<td width="50%">
-								<input type="file" id="ImageFile" onchange="ChgImage()" style="background-color:transparent;color:rgb(230,230,230)">
+								<input type="file" id="ImageFile" onchange="ChgImage()" style="background-color:transparent;color:rgb(230,230,230)" accept=".png,.jpg,.bmp,.gif,.ico">
 							</td>
 						</tr>
 						<tr>

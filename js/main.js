@@ -2,12 +2,14 @@
 Nagaharu Main Script
 */
 
+// 変数の初期化
 var EditText,EditTextArray,EditTextData,EditTextClass; //文章シート関連
 var FileName; //ファイル関連
 var NewTextID=0;
 var PaperSize="A4";
 var fs = require('fs');
 
+// 処理の初期化
 jQuery(function(){
     // A4タテサイズの印刷CSSを設定
     $("#PaperCSS").attr("href","css/paper/"+PaperSize+".css");
@@ -16,6 +18,13 @@ jQuery(function(){
         $(this).bind("keyup", CheckTxData(this));
     });
 } );
+
+// 閉じるボタンの処理
+var win = require('nw.gui').Window.get();
+win.on("close",function(){
+    $("#NoEdit").show();
+    $("#ExitDiag").show();
+})
 
 // ドラッグ＆ドロップ機能の初期化
 function StartDragDrop(){
@@ -26,7 +35,6 @@ function StartDragDrop(){
         start: function(event, ui) {
             // 編集する文章シートのIDを取得
             EditTextData=$(this).attr("id");
-            EditTextClass
             var ChkImage=$("#"+EditTextData).html().indexOf("<img");
             if(ChkImage > -1){
                 $("#TextSheet").hide();
@@ -462,4 +470,9 @@ function ChangeShapeCSS(){
 // 図形の背景色変更
 function ChangeShapeBG(){
     $("#"+EditTextData).css("background-color","#"+$("#ShapeBGColor").val());
+}
+
+// Nagaharuを終了する
+function ExitNghr(){
+    win.close(true);
 }
