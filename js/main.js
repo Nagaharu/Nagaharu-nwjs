@@ -4,7 +4,7 @@ Nagaharu Main Script
 
 // 変数の初期化
 var EditText,EditTextArray,EditTextData,EditTextClass; //文章シート関連
-var FileName; //ファイル関連
+var FileName=""; //ファイル関連
 var NewTextID=0;
 var PaperSize="A4";
 var fs = require('fs');
@@ -17,7 +17,12 @@ jQuery(function(){
     $("#EditTxData").each(function(){
         $(this).bind("keyup", CheckTxData(this));
     });
-} );
+    // 画面へのファイルドロップを禁止
+    $(document).on('drop dragover', function (e) {
+        e.stopPropagation();
+        e.preventDefault();
+    });
+});
 
 // 閉じるボタンの処理
 var win = require('nw.gui').Window.get();
@@ -84,7 +89,6 @@ function StartDragDrop(){
                     $("#TextFontColor").val(TxFontCl);
                 }
             }
-            
 	    }
     });
     jQuery('.Nghr_TextBox').resizable({
@@ -110,7 +114,7 @@ function DoNewPage(){
     NewTextID=0;
     PaperSize="A4";
     FileName="";
-    document.title="Nagaharu DTP";
+    document.title="Nagaharu";
     // 入力欄の初期化
     $("#Paper").empty();
     $("#EditTxData").val("");
@@ -119,6 +123,8 @@ function DoNewPage(){
     $("#TextParam3").val(14);
     $("#TextFontFamily").val("MPlus");
     $("#TextFontColor").val("000000");
+    $("#DataLoad").val("");
+    $("#DataSaveAs").val("");
     $("#NewPageDiag").hide();
     $("#NoEdit").hide();
 }
@@ -141,7 +147,7 @@ function StartLoad(){
     $("#Paper").html(""+NghrHTML[3]);
     // ドラッグ操作を有効化
     StartDragDrop();
-    document.title = FileName+" - Nagaharu DTP";
+    document.title = FileName+" - Nagaharu";
 }
 
 // ドキュメントの保存（ダイアログ表示）
@@ -151,7 +157,7 @@ function DocSaveAs(){
 
 // ドキュメントの上書き保存
 function DocSave(){
-    if(FileName==undefined){
+    if(FileName==""){
         DocSaveAs();
     }else{
         DocSave2();
@@ -171,7 +177,7 @@ function DocSave2(){
 	    if(err) {
 	        alert("保存に失敗しました。");
 	    }else{
-	    	document.title = FileName+" - Nagaharu DTP";
+	    	document.title = FileName+" - Nagaharu";
 	    }
 	});
     jQuery('.Nghr_TextBox').resizable();
@@ -227,7 +233,7 @@ function ExportHTML(){
     var WebFileName=$("#ExportWeb").val();
     var num = WebFileName.indexOf(".html",0);
     if (num == -1) WebFileName=WebFileName+".html";
-    var HTMLData='<html><head><title>Nagaharu DTP</title><meta charset="utf-8"><style>.ShapeSquare{width: 100%;height: 100%;border-radius:0%;background: black;}.Nghr_TextBox{position:relative;}</style></head><body>';
+    var HTMLData='<html><head><title>Nagaharu</title><meta charset="utf-8"><style>.ShapeSquare{width: 100%;height: 100%;border-radius:0%;background: black;}.Nghr_TextBox{position:relative;}</style></head><body>';
     HTMLData+=$("#Paper").html();
     HTMLData+="</body></html>";
     fs.writeFile(WebFileName, HTMLData, function(err) {

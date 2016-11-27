@@ -1,5 +1,5 @@
 <!--
-	Nagaharu Ver.1.0 Beta4
+	Nagaharu Ver.1.0 Stable
 	(c)2015-2016 Sora Arakawa all rights reserved.
 	This Software is MIT License.
 
@@ -94,10 +94,10 @@
 		</div>
 
 		<!-- 開く / 保存ダイアログ -->
-		<input type="file" id="DataSaveAs" nwsaveas style="display:none;" onchange="StartSaveAs()">
+		<input type="file" id="DataSaveAs" nwsaveas style="display:none;" onchange="StartSaveAs()" accept=".ngr">
 		<input type="file" id="DataLoad" style="display:none;" onchange="StartLoad()" accept=".ngr">
-		<input type="file" id="ExportWeb" nwsaveas style="display:none;" onchange="ExportHTML()">
-		<input type="file" id="ExportPicture" nwsaveas style="display:none;" onchange="ExportPNG()">
+		<input type="file" id="ExportWeb" nwsaveas style="display:none;" onchange="ExportHTML()" accept=".html">
+		<input type="file" id="ExportPicture" nwsaveas style="display:none;" onchange="ExportPNG()" accept=".png">
 
 		<!-- 終了の確認ダイアログ -->
 		<div id="ExitDiag" class="Dialog" style="display:none;">
