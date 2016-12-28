@@ -45,6 +45,9 @@ function StartDragDrop(){
                 $("#TextSheet").hide();
                 $("#ShapeSheet").hide();
                 $("#ImgSheet").show();
+                // 画像シートの透明度を取得
+                var ImgOpacity=$(this).css("opacity");
+                $("#ImageOpacity").val(ImgOpacity);
             }else{
                 var ChkShape=$(this).attr("class").indexOf("Shape");
                 if(ChkShape>-1){
@@ -53,6 +56,8 @@ function StartDragDrop(){
                     $("#ShapeSheet").show();
                     $("#ShapeCSS").val($("#"+EditTextData).css("border-radius"));
                     $("#ShapeBGColor").val($("#"+EditTextData).css("background-color"));
+                    var ShpOpacity=$(this).css("opacity");
+                    $("#ShapeOpacity").val(ShpOpacity);
                 }else{
                     $("#TextSheet").show();
                     $("#ImgSheet").hide();
@@ -87,6 +92,10 @@ function StartDragDrop(){
                     // 文章シートのフォント色を取得
                     var TxFontCl=$(this).css("color");
                     $("#TextFontColor").val(TxFontCl);
+
+                    // 文章シートの透明度を取得
+                    var TxOpacity=$(this).css("opacity");
+                    $("#TextOpacity").val(TxOpacity);
                 }
             }
 	    }
@@ -315,6 +324,12 @@ function ChangeFontColor(){
     $("#"+EditTextData).css("color","#"+TxFontColor);
 }
 
+// 文章の透明度変更
+function ChangeTextOpacity(){
+    var TxOpacity=$("#TextOpacity").val();
+    $("#"+EditTextData).css("opacity",TxOpacity);
+}
+
 // 文章の左揃え
 function ChangeFontLeft(){
     $("#"+EditTextData).css("justify-content","flex-start");
@@ -437,6 +452,12 @@ function AddImage(){
     StartDragDrop();
 }
 
+// 画像シートの透明度
+function ChangeImageOpacity(){
+    var ImgOpacity=$("#ImageOpacity").val();
+    $("#"+EditTextData).css("opacity",ImgOpacity);
+}
+
 // 画像シートの画像変更処理
 function ChgImage(){
 	var pic_canvas = document.getElementById('LoadPicCanvas');
@@ -476,6 +497,12 @@ function ChangeShapeCSS(){
 // 図形の背景色変更
 function ChangeShapeBG(){
     $("#"+EditTextData).css("background-color","#"+$("#ShapeBGColor").val());
+}
+
+// 図形の透明度変更
+function ChangeShapeOpacity(){
+    var ShpOpacity=$("#ShapeOpacity").val();
+    $("#"+EditTextData).css("opacity",ShpOpacity);
 }
 
 // Nagaharuを終了する

@@ -175,6 +175,7 @@ h4{
 	margin:8px 4px;
 	width:90%;
 	height:100px;
+	overflow-y:scroll;
 }
 
 #TextStyleLink{

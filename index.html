@@ -171,6 +171,11 @@
 								<input type="text" id="TextFontColor" class="jscolor" value="000000" onchange="javascript:ChangeFontColor()">
 							</td>
 						</tr>
+						<!-- 透明度 -->
+						<tr>
+							<td align="right">透明度：</td>
+							<td><input type="number" min="0" max="1" step="0.01" id="TextOpacity" value="1.0" onchange="javascript:ChangeTextOpacity()"><br></td>
+						</tr>
 					</table>
 					<table style="table-layout:fixed;width:100%;">
 						<tr>
@@ -260,6 +265,10 @@
 							</td>
 						</tr>
 						<tr>
+							<td align="right">透明度：</td>
+							<td><input type="number" min="0" max="1" step="0.01" id="ImageOpacity" value="1.0" onchange="javascript:ChangeImageOpacity()"><br></td>
+						</tr>
+						<tr>
 							<td align="center" width="50%">
 								<a id="TextStyleLink" href="javascript:ChangeLayerUp()">
 									前面へ移動
@@ -312,6 +321,10 @@
 							<td>
 								<input type="text" id="ShapeBGColor" class="jscolor" value="000000" onchange="javascript:ChangeShapeBG()">
 							</td>
+						</tr>
+						<tr>
+							<td align="right">透明度：</td>
+							<td><input type="number" min="0" max="1" step="0.01" id="ShapeOpacity" value="1.0" onchange="javascript:ChangeShapeOpacity()"><br></td>
 						</tr>
 						<tr>
 							<td align="center" width="50%">
