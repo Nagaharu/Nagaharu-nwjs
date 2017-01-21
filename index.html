@@ -1,6 +1,6 @@
 <!--
-	Nagaharu Ver.1.0 Stable
-	(c)2015-2016 Sora Arakawa all rights reserved.
+	Nagaharu Ver.1.0.2 Stable
+	(c)2015-2017 Sora Arakawa all rights reserved.
 	This Software is MIT License.
 
 	http://nagaharu.github.io/
@@ -137,111 +137,177 @@
 				<div style="font-size:20px;overflow:hidden;background-color:transparent;">文字シートの設定</div>
 				<textarea id="EditTxData"></textarea><br>
 				<div style="line-height:34px;">
-					<table style="background-color:transparent;">
-						<!-- 行間 -->
+					<div class="TextBoxHead" onclick="$('#TextFont').slideToggle('slow');"><b>フォント</b></div>
+					<div class="TextBoxMain" id="TextFont">
+						<table style="background-color:transparent;">
+							<!-- 行間 -->
+							<tr>
+								<td align="right">行間：</td>
+								<td><input type="number" id="TextParam1" value="20" onchange="javascript:ChangeLineHeight()"></td>
+							</tr>
+							<!-- 文字間 -->
+							<tr>
+								<td align="right">文字間：</td>
+								<td><input type="number" id="TextParam2" value="0" onchange="javascript:ChangeLineWidth()"></td>
+							</tr>
+							<!-- フォントサイズ -->
+							<tr>
+								<td align="right">フォントサイズ：</td>
+								<td><input type="number" id="TextParam3" value="14" onchange="javascript:ChangeFontSize()"><br></td>
+							</tr>
+							<!-- フォント -->
+							<tr>
+								<td align="right">フォント：</td>
+								<td>
+									<select id="TextFontFamily" onchange="javascript:ChangeFontFamily()">
+										<option value="Migmix">Migmix 1p Regular</option>
+										<option value="ipag" style="font-family:'ipag'">IPA Pゴシック</option>
+										<option value="ipam" style="font-family:'ipam'">IPA P明朝</option>
+									</select>
+								</td>
+							</tr>
+							<!-- フォントカラー -->
+							<tr>
+								<td align="right">フォント色：</td>
+								<td>
+									<input type="text" id="TextFontColor" class="jscolor" value="000000" onchange="javascript:ChangeFontColor()">
+								</td>
+							</tr>
+							<!-- 透明度 -->
+							<tr>
+								<td align="right">透明度：</td>
+								<td><input type="number" min="0" max="1" step="0.01" id="TextOpacity" value="1.0" onchange="javascript:ChangeTextOpacity()"><br></td>
+							</tr>
+						</table>
+					</div>
+					<div class="TextBoxHead" onclick="$('#TextDecoration').slideToggle('slow');"><b>文字装飾</b></div>
+					<div class="TextBoxMain" id="TextDecoration">
+						<table style="table-layout:fixed;width:100%;">
+							<tr>
+								<td align="center" width="33%">
+									<a id="TextStyleLink" href="javascript:ChangeFontLeft()">
+										左揃え
+									</a>
+								</td>
+								<td align="center" width="33%">
+									<a id="TextStyleLink" href="javascript:ChangeFontCenter()">
+										中央揃え
+									</a>
+								</td>
+								<td align="center" width="33%">
+									<a id="TextStyleLink" href="javascript:ChangeFontRight()">
+										右揃え
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td align="center" width="50%">
+									<a id="TextStyleLink" href="javascript:ChangeFontBold()">
+										<b>太字</b>
+									</a>
+								</td>
+								<td align="center" width="50%">
+									<a id="TextStyleLink" href="javascript:ChangeFontItalic()">
+										<i>斜体</i>
+									</a>
+								</td>
+								<td align="center" width="50%">
+									<a id="TextStyleLink" href="javascript:ChangeFontUnderLine()">
+										<u>下線</u>
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td align="center" width="50%" colspan="2">
+									<a id="TextStyleLink" href="javascript:ChangeLayerUp()">
+										前面へ移動
+									</a>
+								</td>
+								<td align="center" width="50%" colspan="2">
+									<a id="TextStyleLink" href="javascript:ChangeLayerDown()">
+										背面へ移動
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td align="center" width="50%" colspan="2">
+									<a id="TextStyleLink" href="javascript:ChangeLayerMostUp()">
+										最前面
+									</a>
+								</td>
+								<td align="center" width="50%" colspan="2">
+									<a id="TextStyleLink" href="javascript:ChangeLayerMostDown()">
+										最背面
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td align="center" width="50%">
+									<a id="TextStyleLink" href="javascript:ChangeFontWritingMode()">
+										縦書き
+									</a>
+								</td>
+								<td align="center" width="50%" colspan="2">
+									<a id="TextStyleLink" href="javascript:DeleteSheet()" style="color:rgb(230,28,36)">
+										シートの削除
+									</a>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				
+			</div>
+			<div style="height:70%;clear:left;display:none;overflow-y:scroll" id="ImgSheet">
+				<div style="font-size:20px;overflow:hidden">画像シートの設定</div>
+				<br>
+				<table style="table-layout:fixed;width:91%;">
+					<tr>
+						<td align="right" width="50%">
+							画像ファイル：
+						</td>
+						<td width="50%">
+							<input type="file" id="ImageFile" onchange="ChgImage()" style="background-color:transparent;color:rgb(230,230,230)" accept=".png,.jpg,.bmp,.gif,.ico">
+						</td>
+					</tr>
+				</table>
+				<div class="TextBoxHead" onclick="$('#ImageDecoration').slideToggle('slow');"><b>画像の加工</b></div>
+				<div class="TextBoxMain" id="ImageDecoration">
+					<table style="table-layout:fixed;width:90%;">
 						<tr>
-							<td align="right">行間：</td>
-							<td><input type="number" id="TextParam1" value="20" onchange="javascript:ChangeLineHeight()"></td>
-						</tr>
-						<!-- 文字間 -->
-						<tr>
-							<td align="right">文字間：</td>
-							<td><input type="number" id="TextParam2" value="0" onchange="javascript:ChangeLineWidth()"></td>
-						</tr>
-						<!-- フォントサイズ -->
-						<tr>
-							<td align="right">フォントサイズ：</td>
-							<td><input type="number" id="TextParam3" value="14" onchange="javascript:ChangeFontSize()"><br></td>
-						</tr>
-						<!-- フォント -->
-						<tr>
-							<td align="right">フォント：</td>
-							<td>
-								<select id="TextFontFamily" onchange="javascript:ChangeFontFamily()">
-									<option value="Migmix">Migmix 1p Regular</option>
-									<option value="ipag" style="font-family:'ipag'">IPA Pゴシック</option>
-									<option value="ipam" style="font-family:'ipam'">IPA P明朝</option>
-								</select>
-							</td>
-						</tr>
-						<!-- フォントカラー -->
-						<tr>
-							<td align="right">フォント色：</td>
-							<td>
-								<input type="text" id="TextFontColor" class="jscolor" value="000000" onchange="javascript:ChangeFontColor()">
-							</td>
-						</tr>
-						<!-- 透明度 -->
-						<tr>
-							<td align="right">透明度：</td>
-							<td><input type="number" min="0" max="1" step="0.01" id="TextOpacity" value="1.0" onchange="javascript:ChangeTextOpacity()"><br></td>
+							<td align="right" width="50%">透明度：</td>
+							<td width="50%"><input type="number" min="0" max="1" step="0.01" id="ImageOpacity" value="1.0" onchange="javascript:ChangeImageOpacity()"><br></td>
 						</tr>
 					</table>
+				</div>
+				<div class="TextBoxHead" onclick="$('#ImageArg').slideToggle('slow');"><b>画像の配置</b></div>
+				<div class="TextBoxMain" id="ImageArg">
 					<table style="table-layout:fixed;width:100%;">
 						<tr>
-							<td align="center" width="33%">
-								<a id="TextStyleLink" href="javascript:ChangeFontLeft()">
-									左揃え
-								</a>
-							</td>
-							<td align="center" width="33%">
-								<a id="TextStyleLink" href="javascript:ChangeFontCenter()">
-									中央揃え
-								</a>
-							</td>
-							<td align="center" width="33%">
-								<a id="TextStyleLink" href="javascript:ChangeFontRight()">
-									右揃え
-								</a>
-							</td>
-						</tr>
-						<tr>
 							<td align="center" width="50%">
-								<a id="TextStyleLink" href="javascript:ChangeFontBold()">
-									<b>太字</b>
-								</a>
-							</td>
-							<td align="center" width="50%">
-								<a id="TextStyleLink" href="javascript:ChangeFontItalic()">
-									<i>斜体</i>
-								</a>
-							</td>
-							<td align="center" width="50%">
-								<a id="TextStyleLink" href="javascript:ChangeFontUnderLine()">
-									<u>下線</u>
-								</a>
-							</td>
-						</tr>
-						<tr>
-							<td align="center" width="50%" colspan="2">
 								<a id="TextStyleLink" href="javascript:ChangeLayerUp()">
 									前面へ移動
 								</a>
 							</td>
-							<td align="center" width="50%" colspan="2">
+							<td align="center" width="50%">
 								<a id="TextStyleLink" href="javascript:ChangeLayerDown()">
 									背面へ移動
 								</a>
 							</td>
 						</tr>
 						<tr>
-							<td align="center" width="50%" colspan="2">
+							<td align="center" width="50%">
 								<a id="TextStyleLink" href="javascript:ChangeLayerMostUp()">
 									最前面
 								</a>
 							</td>
-							<td align="center" width="50%" colspan="2">
+							<td align="center" width="50%">
 								<a id="TextStyleLink" href="javascript:ChangeLayerMostDown()">
 									最背面
 								</a>
 							</td>
 						</tr>
 						<tr>
-							<td align="center" width="50%">
-								<a id="TextStyleLink" href="javascript:ChangeFontWritingMode()">
-									縦書き
-								</a>
-							</td>
 							<td align="center" width="50%" colspan="2">
 								<a id="TextStyleLink" href="javascript:DeleteSheet()" style="color:rgb(230,28,36)">
 									シートの削除
@@ -250,114 +316,71 @@
 						</tr>
 					</table>
 				</div>
-				
-			</div>
-			<div style="height:70%;clear:left;display:none;overflow-y:scroll" id="ImgSheet">
-				<div style="font-size:20px;overflow:hidden">画像シートの設定</div>
-				
-					<table style="table-layout:fixed;width:100%;">
-						<tr>
-							<td align="right" width="50%">
-								画像ファイル：
-							</td>
-							<td width="50%">
-								<input type="file" id="ImageFile" onchange="ChgImage()" style="background-color:transparent;color:rgb(230,230,230)" accept=".png,.jpg,.bmp,.gif,.ico">
-							</td>
-						</tr>
-						<tr>
-							<td align="right">透明度：</td>
-							<td><input type="number" min="0" max="1" step="0.01" id="ImageOpacity" value="1.0" onchange="javascript:ChangeImageOpacity()"><br></td>
-						</tr>
-						<tr>
-							<td align="center" width="50%">
-								<a id="TextStyleLink" href="javascript:ChangeLayerUp()">
-									前面へ移動
-								</a>
-							</td>
-							<td align="center" width="50%">
-								<a id="TextStyleLink" href="javascript:ChangeLayerDown()">
-									背面へ移動
-								</a>
-							</td>
-						</tr>
-						<tr>
-							<td align="center" width="50%">
-								<a id="TextStyleLink" href="javascript:ChangeLayerMostUp()">
-									最前面
-								</a>
-							</td>
-							<td align="center" width="50%">
-								<a id="TextStyleLink" href="javascript:ChangeLayerMostDown()">
-									最背面
-								</a>
-							</td>
-						</tr>
-						<tr>
-							<td align="center" width="50%" colspan="2">
-								<a id="TextStyleLink" href="javascript:DeleteSheet()" style="color:rgb(230,28,36)">
-									シートの削除
-								</a>
-							</td>
-						</tr>
-					</table>
-				
 			</div>
 			<div style="height:70%;clear:left;display:none;overflow-y:scroll" id="ShapeSheet">
 				<div style="font-size:20px;overflow:hidden">図形シートの設定</div>
 				<div style="line-height:34px;">
-					<table>
-						<tr>
-							<td align="right">図形の種類：</td>
-							<td>
-								<select id="ShapeCSS" onchange="javascript:ChangeShapeCSS()">
-									<option value="0%">四角形</option>
-									<option value="10%">角を丸めた四角形</option>
-									<option value="50%">丸</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td align="right">背景色：</td>
-							<td>
-								<input type="text" id="ShapeBGColor" class="jscolor" value="000000" onchange="javascript:ChangeShapeBG()">
-							</td>
-						</tr>
-						<tr>
-							<td align="right">透明度：</td>
-							<td><input type="number" min="0" max="1" step="0.01" id="ShapeOpacity" value="1.0" onchange="javascript:ChangeShapeOpacity()"><br></td>
-						</tr>
-						<tr>
-							<td align="center" width="50%">
-								<a id="TextStyleLink" href="javascript:ChangeLayerUp()">
-									前面へ移動
-								</a>
-							</td>
-							<td align="center" width="50%">
-								<a id="TextStyleLink" href="javascript:ChangeLayerDown()">
-									背面へ移動
-								</a>
-							</td>
-						</tr>
-						<tr>
-							<td align="center" width="50%">
-								<a id="TextStyleLink" href="javascript:ChangeLayerMostUp()">
-									最前面
-								</a>
-							</td>
-							<td align="center" width="50%">
-								<a id="TextStyleLink" href="javascript:ChangeLayerMostDown()">
-									最背面
-								</a>
-							</td>
-						</tr>
-						<tr>
-							<td align="center" width="50%" colspan="2">
-								<a id="TextStyleLink" href="javascript:DeleteSheet()" style="color:rgb(230,28,36)">
-									シートの削除
-								</a>
-							</td>
-						</tr>
-					</table>
+					<div class="TextBoxHead" onclick="$('#ShapeStyle').slideToggle('slow');"><b>図形の種類・色</b></div>
+					<div class="TextBoxMain" id="ShapeStyle">
+						<table>
+							<tr>
+								<td align="right">図形の種類：</td>
+								<td>
+									<select id="ShapeCSS" onchange="javascript:ChangeShapeCSS()">
+										<option value="0%">四角形</option>
+										<option value="10%">角を丸めた四角形</option>
+										<option value="50%">丸</option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td align="right">背景色：</td>
+								<td>
+									<input type="text" id="ShapeBGColor" class="jscolor" value="000000" onchange="javascript:ChangeShapeBG()">
+								</td>
+							</tr>
+							<tr>
+								<td align="right">透明度：</td>
+								<td><input type="number" min="0" max="1" step="0.01" id="ShapeOpacity" value="1.0" onchange="javascript:ChangeShapeOpacity()"><br></td>
+							</tr>
+						</table>
+					</div>
+					<div class="TextBoxHead" onclick="$('#ShapeArg').slideToggle('slow');"><b>図形の配置</b></div>
+					<div class="TextBoxMain" id="ShapeArg">
+						<table style="table-layout:fixed;width:100%;">
+							<tr>
+								<td align="center" width="50%">
+									<a id="TextStyleLink" href="javascript:ChangeLayerUp()">
+										前面へ移動
+									</a>
+								</td>
+								<td align="center" width="50%">
+									<a id="TextStyleLink" href="javascript:ChangeLayerDown()">
+										背面へ移動
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td align="center" width="50%">
+									<a id="TextStyleLink" href="javascript:ChangeLayerMostUp()">
+										最前面
+									</a>
+								</td>
+								<td align="center" width="50%">
+									<a id="TextStyleLink" href="javascript:ChangeLayerMostDown()">
+										最背面
+									</a>
+								</td>
+							</tr>
+							<tr>
+								<td align="center" width="50%" colspan="2">
+									<a id="TextStyleLink" href="javascript:DeleteSheet()" style="color:rgb(230,28,36)">
+										シートの削除
+									</a>
+								</td>
+							</tr>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>

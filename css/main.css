@@ -165,6 +165,17 @@ h4{
 	overflow:visible;
 }
 
+.TextBoxHead{
+	font-size:16px;
+	border-bottom:solid 1px rgb(212,212,212);
+	margin:14px 0px;
+	padding-left:4px;
+}
+
+.TextBoxMain{
+	display:none;
+}
+
 #EditMode{
 	font-size:14px;
 }
