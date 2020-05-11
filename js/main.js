@@ -227,7 +227,7 @@ function DocPrint(){
         $("#NoEdit").show();
         $("#NoPrintDiag").show();
     }else{
-        $("#Paper").printThis();
+		$("#Paper").printThis();
     }
 }
 
@@ -284,7 +284,7 @@ function ExportPNG(){
 
 // ヘルプ画面の表示
 function showHelp(){
-    window.open("help.html", "Nagaharu ヘルプ", "width=300,height=200,scrollbars=yes");
+    window.open("help.html", "Nagaharu ヘルプ", "width=800,height=600,scrollbars=yes");
 }
 
 // 文字シートの追加
